@@ -1,7 +1,5 @@
 FROM alpine:latest
 
-EXPOSE 8080
-
 # Copy everything from your project directory to 
 # a folder called app. Basically copies Main.java
 COPY . /app
@@ -12,10 +10,10 @@ WORKDIR /app
 # Install Java 17, maven
 RUN apk update && apk add openjdk17 maven
 
-RUN mvn compile
+RUN mvn clean package
 
-# mvn spring-boot:run
-CMD ["mvn", "spring-boot:run"]
+COPY --from=build /target/demo-0.0.1-SNAPSHOT.jar demo.jar
 
-
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","demo.jar"]
 
