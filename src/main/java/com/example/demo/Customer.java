@@ -1,24 +1,27 @@
 package com.example.demo;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@Entity
+@ToString
 public class Customer {
-    private static int numberOfCustomers = 0;
 
     private String name;
+
+    @Id
+    @GeneratedValue
     private int id;
 
     public Customer() {
-        numberOfCustomers++;
-        setId(numberOfCustomers);
     }
     public Customer(String name) {
-        numberOfCustomers++;
-        setId(numberOfCustomers);
-
         this.name = name;
     }
 }

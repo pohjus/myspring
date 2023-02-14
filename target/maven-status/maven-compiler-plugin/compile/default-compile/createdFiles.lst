@@ -1,5 +1,4 @@
-com/example/demo/MyCrudRepositoryImpl.class
 com/example/demo/DemoApplication.class
-com/example/demo/MyCrudRepository.class
 com/example/demo/MyController.class
 com/example/demo/Customer.class
+com/example/demo/TietokantaYhteys.class

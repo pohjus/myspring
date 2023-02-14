@@ -21,23 +21,22 @@ import java.util.stream.Collectors;
 
 @RestController
 public class MyController {
-
     @Autowired
-    MyCrudRepository repository;
+    TietokantaYhteys repository;
 
     @GetMapping("customers")
-    public List<Customer> getCustomers() {
-        return repository.getAll();
+    public Iterable<Customer> getCustomers() {
+        return repository.findAll();
     }
 
     @DeleteMapping("customers/{userId}")
     public void deleteCustomer(@PathVariable int userId) {
-        repository.delete(userId);
+        repository.deleteById(userId);
     }
 
     @GetMapping("customers/{userId}")
     public Customer getCustomer(@PathVariable int userId) {
-        Optional<Customer> customer = repository.find(userId);
+        Optional<Customer> customer = repository.findById(userId);
         return customer.isPresent() ? customer.get() : null;
     }
 
@@ -45,7 +44,6 @@ public class MyController {
     public Customer saveCustomer(@RequestBody Customer customer) {
         return repository.save(customer);
     }
-
 }
 
 
