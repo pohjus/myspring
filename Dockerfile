@@ -1,19 +1,13 @@
-FROM alpine:latest
+FROM maven:3.8.2-jdk-17 AS build
 
-# Copy everything from your project directory to 
-# a folder called app. Basically copies Main.java
-COPY . /app
+COPY . .
 
-# Move into that directory
-WORKDIR /app
+RUN mvn clean package -DskipTests
 
-# Install Java 17, maven
-RUN apk update && apk add openjdk17 maven
+FROM openjdk:11-jdk-slim
 
-RUN mvn clean package
-
-COPY --from=build ./target/demo-0.0.1-SNAPSHOT.jar demo.jar
+COPY --from=build /target/demo-0.0.1-SNAPSHOT.jar demo.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","demo.jar"]
 
+ENTRYPOINT ["java","-jar","demo.jar"]
